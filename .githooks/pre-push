@@ -1,0 +1,17 @@
+#!/bin/sh
+# Pre-push hook: Prevent pushes unless .allow-push exists at repo root.
+ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+if [ -z "$ROOT" ]; then
+  echo "Cannot determine repo root. Aborting push." >&2
+  exit 1
+fi
+if [ -f "$ROOT/.allow-push" ]; then
+  exit 0
+fi
+cat <<EOF >&2
+Push blocked by local policy.
+To allow a one-time push, run:
+  echo yes > .allow-push && git push
+Remove the file after if you want to block pushes again.
+EOF
+exit 1
