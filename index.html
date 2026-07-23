@@ -680,6 +680,26 @@
             opacity: 0.15;
             pointer-events: none;
         }
+
+        /* View mode overrides (explicit classes) */
+        body.phone-view #app-container {
+            width: 100%;
+            max-width: none;
+            height: 100vh;
+            max-height: none;
+            border-radius: 0;
+            margin: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        body.web-view #app-container {
+            max-width: 900px;
+            border-radius: 28px;
+            border: 1px solid var(--border-sage);
+            box-shadow: 0 25px 50px -12px rgba(31, 41, 35, 0.25);
+            margin: 16px auto;
+        }
     </style>
 </head>
 <body>
@@ -1530,9 +1550,13 @@
                     </div>
                     
                     <p class="text-gray-700 text-sm md:text-base italic my-3 font-serif leading-relaxed px-2 max-w-sm md:max-w-lg">
-                        "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."
+                        "Dan kahwinkanlah orang-orang bujang (lelaki dan perempuan) dari kalangan kamu, dan orang-orang yang soleh dari hamba-hamba kamu, lelaki dan perempuan. Jika mereka miskin, Allah akan memberikan kekayaan kepada mereka dari limpah kurniaNya kerana Allah Maha Luas (rahmatNya dan limpah kurniaNya-pemberianNya), lagi Maha Mengetahui."
                     </p>
-                    <p class="text-xs md:text-sm text-emerald-900 font-semibold">(Surah Ar-Rum: 21)</p>
+
+                    <div class="mt-4 text-center px-4 max-w-sm md:max-w-lg">
+                        <p class="font-serif text-2xl leading-relaxed">اللهم بارك لهما وبارك عليهما واجمع بينهما في خير</p>
+                        <p class="text-sm text-stone-600 mt-2">Maksudnya: "Ya Allah, berkati mereka berdua dan limpahkanlah keberkatan ke atas mereka berdua, dan satukanlah mereka berdua di dalam kebaikan."</p>
+                    </div>
                 </div>
 
                 <div class="scroll-indicator pt-4 pb-1 text-center cursor-pointer text-emerald-900" onclick="scrollToSection('sec-keluarga')">
@@ -1693,7 +1717,7 @@
             <!-- Footer -->
             <div class="text-center text-sm text-stone-600 py-4 font-serif">
                 <p class="font-bold text-emerald-900 text-base tracking-wide">#theonlyaiMANforATHIRAH</p>
-                <p class="text-xs text-stone-400 mt-1">Sutera Sage Green Digital Invitation Card</p>
+                <p class="text-xs text-stone-400 mt-1">Enchanted at first sight. Together for a lifetime</p>
             </div>
 
         </div> <!-- End Scrollable Content -->
@@ -2087,6 +2111,23 @@
         window.onload = function() {
             initCountdown();
         };
+    </script>
+    <script>
+        // Detect where the page is opened (phone or web) and toggle classes
+        (function() {
+            function updateViewMode() {
+                const isMobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                const smallViewport = window.matchMedia('(max-width: 767px)').matches;
+                const isPhone = isMobileUA || smallViewport;
+                document.body.classList.toggle('phone-view', isPhone);
+                document.body.classList.toggle('web-view', !isPhone);
+            }
+
+            window.addEventListener('resize', updateViewMode);
+            window.addEventListener('orientationchange', updateViewMode);
+            // run after load to ensure layout styles exist
+            window.addEventListener('load', updateViewMode);
+        })();
     </script>
 </body>
 </html>
