@@ -680,6 +680,26 @@
             opacity: 0.15;
             pointer-events: none;
         }
+
+        /* View mode overrides (explicit classes) */
+        body.phone-view #app-container {
+            width: 100%;
+            max-width: none;
+            height: 100vh;
+            max-height: none;
+            border-radius: 0;
+            margin: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        body.web-view #app-container {
+            max-width: 900px;
+            border-radius: 28px;
+            border: 1px solid var(--border-sage);
+            box-shadow: 0 25px 50px -12px rgba(31, 41, 35, 0.25);
+            margin: 16px auto;
+        }
     </style>
 </head>
 <body>
@@ -1693,7 +1713,7 @@
             <!-- Footer -->
             <div class="text-center text-sm text-stone-600 py-4 font-serif">
                 <p class="font-bold text-emerald-900 text-base tracking-wide">#theonlyaiMANforATHIRAH</p>
-                <p class="text-xs text-stone-400 mt-1">Sutera Sage Green Digital Invitation Card</p>
+                <p class="text-xs text-stone-400 mt-1">Enchanted at first sight. Together for a lifetime</p>
             </div>
 
         </div> <!-- End Scrollable Content -->
@@ -2087,6 +2107,23 @@
         window.onload = function() {
             initCountdown();
         };
+    </script>
+    <script>
+        // Detect where the page is opened (phone or web) and toggle classes
+        (function() {
+            function updateViewMode() {
+                const isMobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                const smallViewport = window.matchMedia('(max-width: 767px)').matches;
+                const isPhone = isMobileUA || smallViewport;
+                document.body.classList.toggle('phone-view', isPhone);
+                document.body.classList.toggle('web-view', !isPhone);
+            }
+
+            window.addEventListener('resize', updateViewMode);
+            window.addEventListener('orientationchange', updateViewMode);
+            // run after load to ensure layout styles exist
+            window.addEventListener('load', updateViewMode);
+        })();
     </script>
 </body>
 </html>
